@@ -3,9 +3,7 @@ import numpy as np
 from youtube_transcript_api import YouTubeTranscriptApi
 from datetime import datetime
 from googleapiclient.discovery import build
-import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
-nltk.download('vader_lexicon')
 
 # import boto3
 # from googleapiclient.errors import HttpError
@@ -146,7 +144,6 @@ def combineCaptions(vidID):
         capStr += videoCaptions[i]["text"] + " "
     return capStr
 
-
 # """
 # The code below is used if accessing and building a dataframe over time.
 
@@ -160,7 +157,6 @@ def combineCaptions(vidID):
 # # download s3 csv file to lambda tmp folder
 # local_file_name = 'tmpcaption_df.csv' #
 # s3.Bucket(bucket_name).download_file(key,local_file_name)
-
 # """
 
 # """

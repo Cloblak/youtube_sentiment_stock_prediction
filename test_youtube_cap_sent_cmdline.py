@@ -24,7 +24,6 @@ def test_geo_query():
     df = geo_query()
     assert (len(df) != 0), "the list is non empty"
     
-    
-# geo_query
+
 # combineCaptions
 # capScore
