@@ -31,7 +31,8 @@ def youtube_search(searchCritera, max_results=50,order="relevance", token=None,
     youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=DEVELOPER_KEY)
     
     # pass in search critera to the actual function that saves object as
-    # search responce. 
+    # search responce.
+    
     search_response = youtube.search().list(
         q=searchCritera,
         type="video",
@@ -99,7 +100,7 @@ def addVideoData(vidID = "5OCQoHrU2zM"):
     #instead of an error that stops the code
     try:
         captionStr = combineCaptions(vidID)
-    except:
+    except ValueError:
         captionStr = list()
 
     return pd.Series(

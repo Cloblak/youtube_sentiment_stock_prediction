@@ -1,7 +1,7 @@
 pylint
+pylint-django
 pytest
 click
-numpy
 pandas
 youtube-search-python
 ipython
