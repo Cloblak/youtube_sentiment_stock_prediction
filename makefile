@@ -1,11 +1,11 @@
 install:
 	pip install --upgrade pip &&\
-		pip install -r requirements.txt
+		pip install -r "requirements.txt"
 
 test:
-	python -m pytest -vv test_youtube_cap_sent_cmdline.py
+	python -m pytest -vv "test_youtube_cap_sent_cmdline.py"
 
 lint:
-	pylint --disable=R,E1101,W0702,C youtube_cap_sent_cmdline.py
+	pylint --disable=R,E1101,W0702,C "youtube_cap_sent_cmdline.py"
 
 all: install lint test
