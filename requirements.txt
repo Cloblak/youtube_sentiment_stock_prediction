@@ -1,0 +1,14 @@
+pylint
+pytest
+click
+numpy
+pandas
+youtube-search-python
+ipython
+youtube_transcript_api
+google-api-python-client
+datetime
+boto3
+oauth2client
+nltk
+matplotlib

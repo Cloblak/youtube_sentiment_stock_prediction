@@ -1,16 +1,11 @@
-import numpy as np
 import pandas as pd
 from youtube_transcript_api import YouTubeTranscriptApi
-import json
-import os.path
-import boto3
+#import boto3
 from datetime import datetime
-from apiclient.discovery import build
-from apiclient.errors import HttpError
-from oauth2client.tools import argparser
+from googleapiclient.discovery import build
+#from googleapiclient.errors import HttpError
+#from oauth2client.tools import argparser
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
-import matplotlib
-import matplotlib.pyplot as plt
 
 # assign global varaibles that we will be used through out the code.
 # We will eventaully replace the Developer Key as a command lie 
@@ -19,15 +14,16 @@ DEVELOPER_KEY = "AIzaSyA6NllsCacNGQJDtgJDNdDngn5X4wsN76M"
 YOUTUBE_API_SERVICE_NAME = "youtube"
 YOUTUBE_API_VERSION = "v3"
 
-"""
-We will utlizee the youtube_search function 
-from https://pypi.org/project/youtube-search/
+# """
+# We will utlizee the youtube_search function 
+# from https://pypi.org/project/youtube-search/
 
-This function asks for a searchCriteria and returns a class opbject that 
-has basic information from the number of MAX results requested. This is 
-associated with YouTube API v3, and reqires a Development-Key that has
-appriopriate permissions. 
-"""
+# This function asks for a searchCriteria and returns a class opbject that 
+# has basic information from the number of MAX results requested. This is 
+# associated with YouTube API v3, and reqires a Development-Key that has
+# appriopriate permissions. 
+# """
+
 def youtube_search(searchCritera, max_results=50,order="relevance", token=None, 
                                             location=None, location_radius=None):
     
@@ -60,16 +56,17 @@ def youtube_search(searchCritera, max_results=50,order="relevance", token=None,
     try:
         nexttok = search_response["nextPageToken"]
         return(nexttok, videos)
-    except Exception as e:
+    except StopIteration:
         nexttok = "last_page"
         return(nexttok, videos)
 
 
-"""
-This function is used by taking a video ID and returing a dict of the key values
-snippet, recordingDetails, and statistics.  Within these vlaues are other dict
-that contain the informtaion we need to build our final dataset. 
-"""
+# """
+# This function is used by taking a video ID and returing a dict of the key values
+# snippet, recordingDetails, and statistics.  Within these vlaues are other dict
+# that contain the informtaion we need to build our final dataset. 
+# """
+
 def geo_query(video_id):
     
     youtube = build(YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION,
@@ -82,11 +79,12 @@ def geo_query(video_id):
 
     return video_response
 
-"""
-This function it that main function that takes a vidID and passes back all
-relivent informaiton that we desire to be built into a dataframe.
-"""
-def addVideoData(vidID):
+# """
+# This function it that main function that takes a vidID and passes back all
+# relivent informaiton that we desire to be built into a dataframe.
+# """
+
+def addVideoData(vidID = "5OCQoHrU2zM"):
     dataForVideo = geo_query(vidID)
     videoID = vidID
     datePub = dataForVideo["items"][0]["snippet"]["publishedAt"]
@@ -103,11 +101,10 @@ def addVideoData(vidID):
         captionStr = combineCaptions(vidID)
     except:
         captionStr = list()
-        pass
 
     return pd.Series(
         {
-            "videoID": vidID,
+            "videoID": videoID,
             "datePub": datePub,
             "searchedDate": searchDate,
             "VideoTitle": vidTitle,
@@ -128,33 +125,33 @@ def combineCaptions(vidID):
         capStr += videoCaptions[i]["text"] + " "
     return capStr
 
-"""
-The code below is used if accessing and building a dataframe over time. 
+# """
+# The code below is used if accessing and building a dataframe over time. 
 
-s3 = boto3.resource('s3')
-bucket = s3.Bucket('youtubelambdabucket') # Enter your bucket name, e.g 'Data'
-bucket_name = 'youtubelambdabucket'
-# key path, e.g.'customer_profile/Reddit_Historical_Data.csv'
-key = 'caption_df.csv'
-# lambda function
-# def lambda_handler(event,context):
-# download s3 csv file to lambda tmp folder
-local_file_name = 'tmpcaption_df.csv' #
-s3.Bucket(bucket_name).download_file(key,local_file_name)
+# s3 = boto3.resource('s3')
+# bucket = s3.Bucket('youtubelambdabucket') # Enter your bucket name, e.g 'Data'
+# bucket_name = 'youtubelambdabucket'
+# # key path, e.g.'customer_profile/Reddit_Historical_Data.csv'
+# key = 'caption_df.csv'
+# # lambda function
+# # def lambda_handler(event,context):
+# # download s3 csv file to lambda tmp folder
+# local_file_name = 'tmpcaption_df.csv' #
+# s3.Bucket(bucket_name).download_file(key,local_file_name)
 
-"""
+# """
 
-"""
-The next section of code will be deicated to NLP processing or captions
-in which we will compare to stock prices.
-"""
+# """
+# The next section of code will be deicated to NLP processing or captions
+# in which we will compare to stock prices.
+# """
+
 def capScore(df):
     vader = SentimentIntensityAnalyzer()
     video_df = df
-    sid = SentimentIntensityAnalyzer()
-    for i in range(len(df)):
+    for i in range(len(video_df)):
         sent = df.iloc[i]["captionString"]
-        score = sid.polarity_scores(str(sent))
+        score = vader.polarity_scores(str(sent))
         print(score)
         
 # from flair.data import Sentence
@@ -189,16 +186,16 @@ def main(search = "Nvidia", numVidToSearch = 25):
 
     print(YouTubedf)
 
-"""
-The below code pulls and appends a csv that is stored in a AWS S3 Bucket
+# """
+# The below code pulls and appends a csv that is stored in a AWS S3 Bucket
     
-    # write the data into '/tmp' folder
-    with open('tmpcaption_df.csv','r') as infile:
-        YouTubedf.to_csv("tmpcaption_df.csv", mode="a", header=False)
+#     # write the data into '/tmp' folder
+#     with open('tmpcaption_df.csv','r') as infile:
+#         YouTubedf.to_csv("tmpcaption_df.csv", mode="a", header=False)
     
-    # upload file from tmp to s3 key
-    bucket.upload_file('tmpcaption_df.csv', key)
-"""
+#     # upload file from tmp to s3 key
+#     bucket.upload_file('tmpcaption_df.csv', key)
+# """
 
 if __name__ == "__main__": 
     import sys
