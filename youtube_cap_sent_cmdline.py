@@ -1,8 +1,11 @@
 import pandas as pd
+import numpy as np
 from youtube_transcript_api import YouTubeTranscriptApi
 from datetime import datetime
 from googleapiclient.discovery import build
+import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
+nltk.download('vader_lexicon')
 
 # import boto3
 # from googleapiclient.errors import HttpError
@@ -24,7 +27,6 @@ YOUTUBE_API_VERSION = "v3"
 # associated with YouTube API v3, and reqires a Development-Key that has
 # appriopriate permissions.
 # """
-
 
 def youtube_search(
     searchCritera,
@@ -83,7 +85,7 @@ def youtube_search(
 # """
 
 
-def geo_query(video_id):
+def geo_query(video_id="5OCQoHrU2zM"):
 
     youtube = build(
         YOUTUBE_API_SERVICE_NAME, YOUTUBE_API_VERSION, developerKey=DEVELOPER_KEY
@@ -103,12 +105,11 @@ def geo_query(video_id):
 # relivent informaiton that we desire to be built into a dataframe.
 # """
 
-
 def addVideoData(vidID="5OCQoHrU2zM"):
     dataForVideo = geo_query(vidID)
     videoID = vidID
-    datePub = dataForVideo["items"][0]["snippet"]["publishedAt"]
-    searchDate = str(datetime.now())
+    datePub = datetime.strptime(dataForVideo["items"][0]["snippet"]["publishedAt"], "%Y-%m-%dT%H:%M:%SZ") 
+    searchDate = np.datetime64(datetime.now())
     vidTitle = dataForVideo["items"][0]["snippet"]["title"]
     channelTitle = dataForVideo["items"][0]["snippet"]["channelTitle"]
     viewCount = dataForVideo["items"][0]["statistics"]["viewCount"]
@@ -119,7 +120,7 @@ def addVideoData(vidID="5OCQoHrU2zM"):
     # instead of an error that stops the code
     try:
         captionStr = combineCaptions(vidID)
-    except ValueError:
+    except:
         captionStr = list()
 
     return pd.Series(
@@ -167,14 +168,10 @@ def combineCaptions(vidID):
 # in which we will compare to stock prices.
 # """
 
-
-def capScore(df):
+def capScore(strCap):
     vader = SentimentIntensityAnalyzer()
-    video_df = df
-    for i in range(len(video_df)):
-        sent = df.iloc[i]["captionString"]
-        score = vader.polarity_scores(str(sent))
-        print(score)
+    score = vader.polarity_scores(str(strCap))
+    print(score)
 
 
 def main(search="Nvidia", numVidToSearch=25):
@@ -198,8 +195,10 @@ def main(search="Nvidia", numVidToSearch=25):
         YouTubedf = YouTubedf.append(
             addVideoData(videoRef[1][i]["id"]["videoId"]), ignore_index=True
         )
+        print(YouTubedf.iloc[i])
+        capScore(YouTubedf.iloc[i]["captionString"])
 
-    print(YouTubedf)
+    #print(YouTubedf)
 
 
 # """
@@ -215,7 +214,6 @@ def main(search="Nvidia", numVidToSearch=25):
 
 if __name__ == "__main__":
     import sys
-
     val = str(sys.argv[1])
     val2 = int(sys.argv[2])
     print(sys.argv)
