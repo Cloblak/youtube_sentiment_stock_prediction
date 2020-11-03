@@ -8,5 +8,4 @@ test:
 lint:
 	pylint --disable=R,E1101,C youtube_cap_sent_cmdline.py
 
-all: 
-	install lint test
+all: 	install lint test
