@@ -26,6 +26,7 @@ YOUTUBE_API_VERSION = "v3"
 # appriopriate permissions.
 # """
 
+
 def youtube_search(
     searchCritera,
     max_results=50,
@@ -103,10 +104,13 @@ def geo_query(video_id="5OCQoHrU2zM"):
 # relivent informaiton that we desire to be built into a dataframe.
 # """
 
+
 def addVideoData(vidID="5OCQoHrU2zM"):
     dataForVideo = geo_query(vidID)
     videoID = vidID
-    datePub = datetime.strptime(dataForVideo["items"][0]["snippet"]["publishedAt"], "%Y-%m-%dT%H:%M:%SZ") 
+    datePub = datetime.strptime(
+        dataForVideo["items"][0]["snippet"]["publishedAt"], "%Y-%m-%dT%H:%M:%SZ"
+    )
     searchDate = np.datetime64(datetime.now())
     vidTitle = dataForVideo["items"][0]["snippet"]["title"]
     channelTitle = dataForVideo["items"][0]["snippet"]["channelTitle"]
@@ -144,6 +148,7 @@ def combineCaptions(vidID):
         capStr += videoCaptions[i]["text"] + " "
     return capStr
 
+
 # """
 # The code below is used if accessing and building a dataframe over time.
 
@@ -163,6 +168,7 @@ def combineCaptions(vidID):
 # The next section of code will be deicated to NLP processing or captions
 # in which we will compare to stock prices.
 # """
+
 
 def capScore(strCap):
     vader = SentimentIntensityAnalyzer()
@@ -194,7 +200,7 @@ def main(search="Nvidia", numVidToSearch=25):
         print(YouTubedf.iloc[i])
         capScore(YouTubedf.iloc[i]["captionString"])
 
-    #print(YouTubedf)
+    # print(YouTubedf)
 
 
 # """
@@ -210,6 +216,7 @@ def main(search="Nvidia", numVidToSearch=25):
 
 if __name__ == "__main__":
     import sys
+
     val = str(sys.argv[1])
     val2 = int(sys.argv[2])
     print(sys.argv)
