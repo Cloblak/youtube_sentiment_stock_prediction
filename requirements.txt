@@ -13,4 +13,4 @@ boto3
 oauth2client
 nltk
 matplotlib
-black
+git+git://github.com/psf/black
