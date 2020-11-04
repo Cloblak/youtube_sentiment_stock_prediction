@@ -3,6 +3,7 @@ pylint-django
 pytest
 click
 pandas
+numpy
 youtube-search-python
 ipython
 youtube_transcript_api
@@ -12,3 +13,4 @@ boto3
 oauth2client
 nltk
 matplotlib
+black
