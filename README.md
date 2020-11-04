@@ -10,6 +10,13 @@ a window from exterpt eyes on the way a product or service may effect a stock
 price.  This pyhton script hopes to investigate those precived trends and 
 highlight effects of content on youtube against a targeted stock. 
 
+#### Acknowledgement
+
+The major package used to pull the captions themselves was the 
+youtube_transcript_api package.  You can find details on it as the below link.
+
+https://github.com/jdepoix/youtube-transcript-api
+
 ## Installation (Coming Soon)
 
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install 
@@ -40,6 +47,9 @@ captionString    ["Good Day for Dreaming"\nby Ruelle playing] H...
 Name: 0, dtype: object
 {'neg': 0.013, 'neu': 0.802, 'pos': 0.185, 'compound': 1.0}
 ```
+
+## Author
+Christopher Oblak (linkedin: www.linkedin.com/in/christopheroblak/)
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

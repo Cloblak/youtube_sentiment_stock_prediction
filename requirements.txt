@@ -14,3 +14,4 @@ oauth2client
 nltk
 matplotlib
 black
+scikit-learn

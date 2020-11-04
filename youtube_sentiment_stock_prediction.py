@@ -141,7 +141,7 @@ def addVideoData(vidID="5OCQoHrU2zM"):
 
 
 # Define a function that takes a video ID and returns a string of the caption
-def combineCaptions(vidID):
+def combineCaptions(vidID="5OCQoHrU2zM"):
     videoCaptions = YouTubeTranscriptApi.get_transcript(vidID)
     capStr = ""
     for i in range(len(videoCaptions)):
@@ -215,6 +215,11 @@ def main(search="Nvidia", numVidToSearch=25):
 # """
 
 if __name__ == "__main__":
+    # import click
+    
+    # @click.command()
+    # @click.option('--val1', prompt='YouTube Search Critera',
+    #           help='The person to greet.'))
     import sys
 
     val = str(sys.argv[1])
