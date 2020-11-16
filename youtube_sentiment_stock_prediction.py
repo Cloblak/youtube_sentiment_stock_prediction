@@ -5,10 +5,6 @@ from datetime import datetime
 from googleapiclient.discovery import build
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
-# import boto3
-# from googleapiclient.errors import HttpError
-# from oauth2client.tools import argparser
-
 # assign global varaibles that we will be used through out the code.
 # We will eventaully replace the Developer Key as a command lie
 
@@ -150,7 +146,8 @@ def combineCaptions(vidID="5OCQoHrU2zM"):
 
 
 # """
-# The code below is used if accessing and building a dataframe over time.
+# The code below is used if accessing and building a dataframe over time 
+# utilizing AWS S3 buckets, and lambda functions.
 
 # s3 = boto3.resource('s3')
 # bucket = s3.Bucket('youtubelambdabucket') # Enter your bucket name, e.g 'Data'
@@ -170,10 +167,11 @@ def combineCaptions(vidID="5OCQoHrU2zM"):
 # """
 
 
-def capScore(strCap):
+def capScore(strCap = "This is a default test, and I am happy"):
     vader = SentimentIntensityAnalyzer()
     score = vader.polarity_scores(str(strCap))
     print(score)
+    return score
 
 
 def main(search="Nvidia", numVidToSearch=25):
@@ -216,7 +214,7 @@ def main(search="Nvidia", numVidToSearch=25):
 
 if __name__ == "__main__":
     # import click
-    
+
     # @click.command()
     # @click.option('--val1', prompt='YouTube Search Critera',
     #           help='The person to greet.'))

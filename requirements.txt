@@ -15,3 +15,5 @@ nltk
 matplotlib
 black
 scikit-learn
+plotnine
+yfinance

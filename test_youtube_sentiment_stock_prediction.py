@@ -2,6 +2,7 @@ from youtube_sentiment_stock_prediction import youtube_search
 from youtube_sentiment_stock_prediction import addVideoData
 from youtube_sentiment_stock_prediction import geo_query
 from youtube_sentiment_stock_prediction import combineCaptions
+from youtube_sentiment_stock_prediction import capScore
 
 def test_youtube_search():
     assert (
@@ -28,8 +29,11 @@ def test_geo_query():
 
 
 def test_combineCaptions():
-    assert isinstance(
-        combineCaptions(), str
-    ), "The caption does not contain a string"
+    assert isinstance(combineCaptions(), str), "The caption does not contain a string"
 
-# capScore
+
+def test_capScore():
+    test = capScore()
+    key, value = "neg", 0.0
+    assert key in test and value == test[key]
+
