@@ -3,7 +3,7 @@
 # Youtube Caption Sentiment (Pending: Stock Prediciton)
 
 Youtube_Sentiment_Stock_Prediction is a Python package that we hope will be a 
-robust way to begin building an understanding the effects youtube creators 
+robust way to begin building and understanding the effects youtube creators 
 can have on stock prices.  There are many examples of influencers on youtube
 that create content and either move stock prices themselfs, or at least provide
 a window from exterpt eyes on the way a product or service may effect a stock
