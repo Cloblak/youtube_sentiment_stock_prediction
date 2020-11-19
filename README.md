@@ -13,7 +13,7 @@ highlight effects of content on youtube against a targeted stock.
 #### Acknowledgement
 
 The major package used to pull the captions themselves was the 
-youtube_transcript_api package.  You can find details on it as the below link.
+youtube_transcript_api package.  You can find details on it at the below link.
 
 https://github.com/jdepoix/youtube-transcript-api
 
