@@ -7,18 +7,18 @@ from googleapiclient.discovery import build
 from oauth2client.tools import argparser
 
 
-
-DEVELOPER_KEY = "XXXXXXXX"  #Change to you Development Key Here
+DEVELOPER_KEY = "XXXXXXXX"  # Change to you Development Key Here
 YOUTUBE_API_SERVICE_NAME = "youtube"
 YOUTUBE_API_VERSION = "v3"
 s3 = boto3.resource("s3")
-bucket = s3.Bucket("youtubelambdabucket") #Change to yout S3 bucketname
+bucket = s3.Bucket("youtubelambdabucket")  # Change to yout S3 bucketname
 
 # """
-# Handler Function that called key functions that pull in a csv from S3 to 
+# Handler Function that called key functions that pull in a csv from S3 to
 # update with the next set of youtube captions scraped from the top 25
 # videos
 # """
+
 
 def lambda_handler(event, context):
 
@@ -41,8 +41,8 @@ def lambda_handler(event, context):
         ]
     )
 
-    #Change your search critera and # of videos to process
-    videoRef = youtube_search("Nvidia Stock", 25) 
+    # Change your search critera and # of videos to process
+    videoRef = youtube_search("Nvidia Stock", 25)
 
     for i in range(len(videoRef[1])):
         YouTubedf = YouTubedf.append(
@@ -64,6 +64,7 @@ def lambda_handler(event, context):
 # associated with YouTube API v3, and reqires a Development-Key that has
 # appriopriate permissions.
 # """
+
 
 def youtube_search(
     q,
@@ -105,6 +106,7 @@ def youtube_search(
         nexttok = "last_page"
         return (nexttok, videos)
 
+
 # """
 # This function is used by taking a video ID and returing a dict of the key values
 # snippet, recordingDetails, and statistics.  Within these vlaues are other dict
@@ -123,11 +125,13 @@ def geo_query(video_id):
         .execute()
     )
     return video_response
-    
+
+
 # """
 # This function it the main function that takes a vidID and passes back all
 # relivent informaiton that we desire to be built into a dataframe.
 # """
+
 
 def addVideoData(vidID):
     dataForVideo = geo_query(vidID)
