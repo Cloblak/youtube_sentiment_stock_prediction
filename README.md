@@ -30,10 +30,10 @@ pip install ***
 
 #### youtube_sentiment_stock_prediction.py 
 
-Use of this python code allows you to see results froma simple cmd line tool.
+Use of this python code allows you to see results from a simple cmd line tool.
 
 ```cmd line
-$ python youtube_sentiment_stock_prediction APPLE 5       
+$ python youtube_sentiment_stock_prediction "APPLE Stock" 5       
         # APPLE = Desired youtube search or ticker symbol 
         # 25 = Number of top search results to aggrigate sentiment score from
 
@@ -54,7 +54,7 @@ Name: 0, dtype: object
 
 #### stock_pred_model.py
 
-The stcok_pred_model.py code will take the (current) caption data that the lambda 
+The stock_pred_model.py code will take the (current) caption data that the lambda 
 fuction builds that then plot that with the associated Stock data.  In this case
 the data and code has been written for Nvidia Youtube Searches and Stock 
 comparisons (see below image for exmple of plot, and this codes potential usefulness)
