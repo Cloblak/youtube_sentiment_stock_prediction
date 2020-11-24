@@ -4,8 +4,10 @@ from youtube_sentiment_stock_prediction import geo_query
 from youtube_sentiment_stock_prediction import combineCaptions
 from youtube_sentiment_stock_prediction import capScore
 import nltk
-nltk.download('vader_lexicon')
+
+nltk.download("vader_lexicon")
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
+
 
 def test_youtube_search():
     assert (
@@ -39,4 +41,3 @@ def test_capScore():
     test = capScore()
     key, value = "neg", 0.0
     assert key in test and value == test[key]
-

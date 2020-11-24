@@ -146,7 +146,7 @@ def combineCaptions(vidID="5OCQoHrU2zM"):
 
 
 # """
-# The code below is used if accessing and building a dataframe over time 
+# The code below is used if accessing and building a dataframe over time
 # utilizing AWS S3 buckets, and lambda functions.
 
 # s3 = boto3.resource('s3')
@@ -167,7 +167,7 @@ def combineCaptions(vidID="5OCQoHrU2zM"):
 # """
 
 
-def capScore(strCap = "This is a default test, and I am happy"):
+def capScore(strCap="This is a default test, and I am happy"):
     vader = SentimentIntensityAnalyzer()
     score = vader.polarity_scores(str(strCap))
     print(score)
