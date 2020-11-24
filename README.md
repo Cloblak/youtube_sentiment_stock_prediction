@@ -45,7 +45,7 @@ Use of this python code allows you to see results from a simple cmd line tool.
 
 ```cmd line
 $ python youtube_sentiment_stock_prediction "APPLE Stock" 5       
-        # APPLE = Desired youtube search or ticker symbol 
+        # APPLE Stock = Desired youtube search or ticker symbol 
         # 25 = Number of top search results to aggrigate sentiment score from
 
 # OUTPUT EXAMPLE
