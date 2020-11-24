@@ -69,12 +69,19 @@ def video_title_model_plot(df):
     ax2.set_ylabel("Video Title Compound Sentiment Score", color="blue", fontsize=14)
     plt.show()
     # save the plot as a file
-    fig.savefig("TEST2.jpeg", format="jpeg", dpi=100, bbox_inches="tight")
+    fig.savefig(
+        "10_plots/NVDA_Sentiment_Stock_ComparisonPlot.jpeg",
+        format="jpeg",
+        dpi=100,
+        bbox_inches="tight",
+    )
 
     s3 = boto3.resource("s3")
     bucket_plot = s3.Bucket("youtubelambdabucket")
     # bucket.put_object(Body='/tmp/TEST.jpeg', ContentType='image/jpeg', Key="New_Polt.jpeg")
-    bucket_plot.upload_file("TEST2.jpeg", "New_Polt_v3.jpeg")
+    bucket_plot.upload_file(
+        "10_plots/NVDA_Sentiment_Stock_ComparisonPlot.jpeg", "New_Polt_v3.jpeg"
+    )
 
 
 def main():
@@ -82,8 +89,8 @@ def main():
     BUCKET_NAME = "youtubelambdabucket"  # replace with your bucket name
     KEY = "caption_df.csv"  # replace with your object key
     s3 = boto3.resource("s3")
-    s3.Bucket(BUCKET_NAME).download_file(KEY, "caption_df_current.csv")
-    caption_df = pd.read_csv("caption_df_current.csv")
+    s3.Bucket(BUCKET_NAME).download_file(KEY, "00_data/caption_df_current.csv")
+    caption_df = pd.read_csv("00_data/caption_df_current.csv")
 
     # drop the unnecessary columns
     caption_df.drop(columns=["Unnamed: 0"])
