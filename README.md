@@ -59,6 +59,9 @@ fuction builds that then plot that with the associated Stock data.  In this case
 the data and code has been written for Nvidia Youtube Searches and Stock 
 comparisons (see below image for exmple of plot, and this codes potential usefulness)
 
+
+![Alt text](10_plots/NVDA_Sentiment_Stock_ComparisonPlot.jpeg?raw=true "Title")
+
 ## Author
 Christopher Oblak (linkedin: www.linkedin.com/in/christopheroblak/)
 
